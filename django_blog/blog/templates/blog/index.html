@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static%}
+
+{% block title %}My Blog{% endblock title %}
+
+{% block css_files %}
+<link rel="stylesheet" href = "{% static "blog/post.css"%}" />
+<link rel="stylesheet" href = "{% static "blog/index.css"%}" />
+{% endblock css_files %}
+
+{% block content %}
+
+
+{% comment %} <header id="main-navigation">
+    <h1><a href=""> Epsilon's Blog </a></h1>
+    <nav>
+        <a href="">All Posts</a>
+    </nav>
+</header> {% endcomment %}
+<section id="welcome">
+    <header>
+        <img src="{% static "blog/images/max.png"%}" alt="Author"/>
+        <h2>EPSILON'S BLOG</h2>
+    </header>
+    <p> Some random text about blogs</p>
+</section>
+
+<section id="latest-posts">
+    <h2> Latest Thoughts</h2>
+    <ul>
+        {% for post in posts %}
+        {% include "blog/includes/post.html" %}
+        {% endfor %}
+    </ul>
+</section>
+
+<section id="about">
+    <h2> What I do</h2>
+    <p> Random text about yourself Random text about yourself
+        Random text about yourself !!!!!!!
+    </p>
+</section>
+
+{% endblock content %}
