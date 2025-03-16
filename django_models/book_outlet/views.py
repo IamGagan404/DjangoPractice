@@ -9,6 +9,7 @@ def index(request):
     books = Book.objects.all().order_by("-rating") #order_by() can also be included here, add - sign in front of field for desc order
     total = books.count()
     avg_rating = books.aggregate(Avg("rating"))
+    avg_rating["rating__avg"] = round(avg_rating["rating__avg"],2)
 
     return render(request, "book_outlet/index.html",{
         "books": books,
