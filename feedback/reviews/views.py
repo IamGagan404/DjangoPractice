@@ -5,6 +5,7 @@ from .models import Review
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DeleteView
 from django.views.generic.edit import FormView,CreateView
+from django.http import HttpResponseRedirect
 # Create your views here.
 
 def thankyou(request):
@@ -96,3 +97,18 @@ class SingleView(DeleteView):
     template_name = "reviews/single.html"
     model = Review
 
+    def get_context_data(self, **kwargs) :
+        context = super().get_context_data(**kwargs)
+        loaded_review = self.object
+        request = self.request
+        fav_id = request.session.get("fav_review")  # get method for error handling is session data not set before
+        context["is_fav"] = fav_id == str(loaded_review.id)
+        return context
+    
+
+class AddFavView(View):
+    def post(self,request):
+        review_id = request.POST["review_id"]
+        fav_review = Review.objects.get(pk=review_id)
+        request.session["fav_review"] = review_id
+        return HttpResponseRedirect("/reviews/"+review_id)
