@@ -1,0 +1,21 @@
+>>>>.select_related() vs prefetch_related()
+    - used for data fetching from DB. 
+    -           select_related()                    prefetch_related()
+        one-to-one, foreignkey                   many-to-many, reverse-foreignkey
+
+        one but complex query                   2 queries one for main objects
+        JOIN with SELECT performed              another for related objects.Then
+        on DB                                   joined in python.
+
+        single hit on database                  multiple
+
+    Book.objects.select_related('author').all() Book.objects.prefetch_related('genres').all()
+
+>>>>> Middlewares
+ - lightweight plugin systems in django, allows to process req, res globally 
+    before they reach views
+ - request is made -> middleware stack -> view -> response -> 
+   reverse middleware stack -> response
+ - Logging, authentication, modify header, throttling
+
+
